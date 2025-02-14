@@ -94,6 +94,7 @@ function showCard(name) {
         // Show appropriate card based on name
         const messages = {
             natalia: "To my beautiful Natalia, who makes my world more warm and adventurous than any volcano! Thank you for being such an amazing Mom to our family! \n\n To many more travels & adventures around this planet together. <3 \n\nHappy Valentine's Day! ❤️ \n\n- Te amo mucho, Codi",
+            steve: "Yo bro! 🪂\n\nHad to make you a special card cause you're literally the most badass brother ever! Like seriously, who else can say their bro trains elite soldiers to jump out of perfectly good aircraft?! 😎\n\nThose special ops missions with the K9 units were epic enough, but now you're out there being the master of the skies! That's some next-level stuff right there!\n\nKeep being an absolute legend and stay safe up there! 🇺🇸\n\nHappy V-Day bro! 🤜🤛\n\n- Your proud little bro,\nCodi",
             kalia: "To my precious little cow lover! \n\n Daddy loves you to the moooon and back! \n\nLove, Dad",
             sam: `To my SamstaTehMonsta, Minecraft champion! You're better than netherite 𐂫! \n\n Happy Valentine's Day! \n\n ❤️ Love, Dad`,
             dad: "To my amazing dad, ⌘BigSarge628! 🎖️\n\nImagine if you hadn't been obsessed with computers too.... Your guidance and wisdom have shaped who I am today. Our endless conversations about everything under the sun are some of my most cherished memories. Can't wait for you to visit us - we have so much more to talk about!\n\nHappy Valentine's Day! ❤️\n\nProudly,\nYour Son",
@@ -156,6 +157,8 @@ function showCard(name) {
                 animateCostaRicaScene();
             } else if (name === 'dad') {
                 animateMilitaryScene();
+            } else if (name === 'steve') {
+                animateSpecialOpsScene();
             }
         } else {
             const defaultCard = document.getElementById('default-card');
@@ -926,4 +929,149 @@ militaryStyle.textContent = `
         }
     }
 `;
-document.head.appendChild(militaryStyle); 
+document.head.appendChild(militaryStyle);
+
+function animateSpecialOpsScene() {
+    const scene = document.querySelector('.special-ops-scene');
+    if (!scene) return;
+
+    const helicopter = scene.querySelector('.helicopter');
+    const parachuteZone = scene.querySelector('.parachute-zone');
+    
+    // Initial helicopter position
+    let phase = 'entry';
+    let helicopterX = -20;
+    let helicopterY = 30;
+    let time = 0;
+    
+    function moveHelicopter() {
+        switch(phase) {
+            case 'entry':
+                // Fly in from left
+                helicopterX += 1;
+                if (helicopterX >= 40) {
+                    phase = 'hover';
+                    time = 0;
+                }
+                break;
+            case 'hover':
+                // Hover and slight movement
+                time += 0.05;
+                helicopterX = 40 + Math.sin(time) * 5;
+                helicopterY = 30 + Math.cos(time) * 2;
+                if (time >= Math.PI * 2) {
+                    phase = 'deploy';
+                    deployParatroopers();
+                }
+                break;
+            case 'deploy':
+                // Hold position during deployment
+                time += 0.05;
+                helicopterX = 40 + Math.sin(time) * 2;
+                helicopterY = 30 + Math.cos(time) * 1;
+                if (time >= Math.PI * 4) {
+                    phase = 'exit';
+                }
+                break;
+            case 'exit':
+                // Bank right and fly away
+                helicopterX += 1;
+                if (helicopterX > 120) {
+                    phase = 'complete';
+                }
+                break;
+        }
+
+        if (phase !== 'complete') {
+            helicopter.style.left = `${helicopterX}%`;
+            helicopter.style.top = `${helicopterY}%`;
+            requestAnimationFrame(moveHelicopter);
+        }
+    }
+
+    function deployParatroopers() {
+        const positions = [41, 42, 43, 44];
+        let delay = 0;
+
+        positions.forEach((startX) => {
+            setTimeout(() => {
+                const trooper = document.createElement('div');
+                trooper.className = 'parachutist';
+                trooper.innerHTML = '🪂';
+                trooper.style.left = `${startX}%`;
+                trooper.style.top = `${helicopterY + 5}%`;
+                parachuteZone.appendChild(trooper);
+
+                let y = helicopterY + 5;
+                let x = startX;
+                let phase = 'freefall';
+                let time = 0;
+                let parachuteDeployed = false;
+
+                function fall() {
+                    time += 0.05;
+
+                    switch(phase) {
+                        case 'freefall':
+                            // Fast descent with slight spread
+                            y += 1.2;
+                            x += Math.sin(time) * 0.3;
+                            
+                            // Deploy parachute at specific height
+                            if (y >= 60 && !parachuteDeployed) {
+                                phase = 'gliding';
+                                parachuteDeployed = true;
+                                trooper.style.transform = 'scale(1.5)';
+                            }
+                            break;
+                        case 'gliding':
+                            // Slower descent with gentle swaying
+                            y += 0.3;
+                            x += Math.sin(time * 0.5) * 0.2;
+                            break;
+                    }
+
+                    if (y < 85) {
+                        trooper.style.left = `${x}%`;
+                        trooper.style.top = `${y}%`;
+                        requestAnimationFrame(fall);
+                    } else {
+                        // Landing
+                        setTimeout(() => trooper.remove(), 1000);
+                    }
+                }
+
+                fall();
+            }, delay);
+            delay += 500; // Half second between each jumper
+        });
+    }
+
+    // Start the sequence
+    moveHelicopter();
+
+    // Add ambient effects
+    const medalDisplay = scene.querySelector('.medals-display');
+    function createAmbientEffect() {
+        if (Math.random() < 0.3) {
+            const medal = document.createElement('div');
+            medal.className = 'medal';
+            medal.innerHTML = ['⭐', '🎖️'][Math.floor(Math.random() * 2)];
+            medal.style.left = Math.random() * 100 + '%';
+            medal.style.top = Math.random() * 100 + '%';
+            medal.style.opacity = '0';
+            medalDisplay.appendChild(medal);
+
+            setTimeout(() => {
+                medal.style.opacity = '1';
+                setTimeout(() => {
+                    medal.style.opacity = '0';
+                    setTimeout(() => medal.remove(), 500);
+                }, 1000);
+            }, 100);
+        }
+    }
+
+    // Create ambient effects periodically
+    setInterval(createAmbientEffect, 2000);
+}
