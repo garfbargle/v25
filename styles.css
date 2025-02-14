@@ -133,14 +133,31 @@ body {
 .ascii-cow {
     font-family: monospace;
     white-space: pre;
-    font-size: 20px;
+    font-size: 16px;
     margin: 2rem 0;
-    animation: cowAnimation 1s infinite;
+    line-height: 1.2;
+    position: relative;
+    color: #333;
 }
 
-@keyframes cowAnimation {
+@keyframes floatHeart {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
+}
+
+@keyframes moonBlush {
+    0%, 100% { color: #333; }
+    50% { color: #ff69b4; }
+}
+
+.moon-blush {
+    animation: moonBlush 1s infinite;
+}
+
+.floating-heart {
+    animation: floatHeart 1s infinite;
+    position: absolute;
+    color: #ff69b4;
 }
 
 /* Sam's Minecraft Theme */
@@ -252,7 +269,7 @@ body {
     background: linear-gradient(45deg, rgba(255,20,147,0.1), rgba(255,105,180,0.1));
     transition: transform 0.3s ease;
     white-space: pre-line;
-    text-align: left;
+    text-align: center;
 }
 
 .message:hover {
