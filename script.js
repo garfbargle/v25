@@ -55,7 +55,8 @@ function showCard(name) {
         sam: `To my SamstaTehMonsta, Minecraft champion! You're better than netherite 𐂫! \n\n Happy Valentine's Day! \n\n ❤️ Love, Dad`,
         mom: "To the strongest woman I know!\n\nYour care and dedication to our family and others is truly inspiring. Thank you for always being there.\n\nHappy Valentine's Day! ❤️\n\nLove, Your Son",
         kayla: "To my tough-as-nails sister!\n\nProud of you for breaking barriers and showing them how it's done in a man's world. Keep being amazing!\n\nHappy Valentine's Day! ⚡❤️\n\nLove, Your Brother",
-        tori: "To my animal-whispering sister!\n\nYour love for all creatures great and small makes the world a better place. Give all your furry (and scaly) friends a Valentine's hug from me!\n\nHappy Valentine's Day! 🐾❤️\n\nLove, Your Brother"
+        tori: "To my animal-whispering sister!\n\nYour love for all creatures great and small makes the world a better place. Give all your furry (and scaly) friends a Valentine's hug from me!\n\nHappy Valentine's Day! 🐾❤️\n\nLove, Your Brother",
+        kyledan: "To Kyle & Dan, the ultimate freedom fighters! 🦅\n\nKeep stacking sats and protecting liberty. Your dedication to financial freedom and American values is truly inspiring.\n\nHappy Valentine's Day! ₿❤️🇺🇸\n\nFrom your fellow sovereign individual,\nCodi"
     };
 
     const cardId = `${name}-card`;
@@ -85,6 +86,8 @@ function showCard(name) {
             animatePowerLines();
         } else if (name === 'tori') {
             animateAnimals();
+        } else if (name === 'kyledan') {
+            createStars();
         }
     } else {
         const defaultCard = document.getElementById('default-card');
@@ -220,6 +223,26 @@ function animateAnimals() {
     }, 1000);
 }
 
+function createStars() {
+    const container = document.querySelector('.stars');
+    if (!container) return;
+    
+    const createStar = () => {
+        const star = document.createElement('div');
+        star.innerHTML = '⭐';
+        star.style.position = 'absolute';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.fontSize = (Math.random() * 15 + 10) + 'px';
+        star.style.opacity = '0';
+        star.style.animation = 'starTwinkle 2s ease-in-out infinite';
+        container.appendChild(star);
+        setTimeout(() => star.remove(), 2000);
+    };
+
+    setInterval(createStar, 300);
+}
+
 function speakMessage(message) {
     // Cancel any ongoing speech
     window.speechSynthesis.cancel();
@@ -271,4 +294,14 @@ function createCustomCard() {
         
         showCard('custom-' + name);
     }
-} 
+}
+
+// Add this keyframe animation to the existing styles
+const style = document.createElement('style');
+style.textContent = `
+    @keyframes starTwinkle {
+        0%, 100% { opacity: 0; }
+        50% { opacity: 1; }
+    }
+`;
+document.head.appendChild(style); 
