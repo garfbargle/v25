@@ -68,10 +68,12 @@ function showCard(name) {
         
         // Add click handler for speak button
         const speakButton = card.querySelector('.speak-button');
-        speakButton.onclick = () => {
-            const message = messageElement.textContent;
-            speakMessage(message);
-        };
+        if (speakButton) {  // Only add click handler if button exists
+            speakButton.onclick = () => {
+                const message = messageElement.textContent;
+                speakMessage(message);
+            };
+        }
         
         if (name === 'sam') {
             createHeartParticles();
@@ -87,13 +89,6 @@ function showCard(name) {
     } else {
         const defaultCard = document.getElementById('default-card');
         defaultCard.classList.remove('hidden');
-        
-        // Add click handler for default card speak button
-        const speakButton = defaultCard.querySelector('.speak-button');
-        speakButton.onclick = () => {
-            const message = defaultCard.querySelector('.message').textContent;
-            speakMessage(message);
-        };
     }
 }
 
