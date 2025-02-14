@@ -9,6 +9,45 @@ function showCard(name) {
         card.classList.add('hidden');
     });
 
+    // Check if it's a custom card
+    if (name && name.startsWith('custom-')) {
+        const customName = name.replace('custom-', '');
+        const customMessages = [
+            `Dear ${customName},\n\nYour smile brightens every room you enter and your kindness touches everyone around you. On this Valentine's Day, I hope you feel as special as you make others feel!\n\nHappy Valentine's Day! ❤️\n\nWith love,\nYour Secret Admirer`,
+            
+            `Dear ${customName},\n\nLike a star in the night sky, you shine with your own unique light. May your Valentine's Day be as brilliant and special as you are!\n\nHappy Valentine's Day! ✨❤️\n\nWarmest wishes,\nYour Secret Admirer`,
+            
+            `Dear ${customName},\n\nYour presence makes the world a better place. Thank you for being the wonderful person that you are!\n\nHappy Valentine's Day! 🌟❤️\n\nWith appreciation,\nYour Secret Admirer`,
+            
+            `Dear ${customName},\n\nEvery day is brighter because you're in it. Your energy and spirit are truly one of a kind!\n\nHappy Valentine's Day! 🌈❤️\n\nCheers to you,\nYour Secret Admirer`,
+            
+            `Dear ${customName},\n\nYou have a heart of gold and a spirit that inspires. Never stop being the amazing person you are!\n\nHappy Valentine's Day! 💫❤️\n\nWith admiration,\nYour Secret Admirer`
+        ];
+        
+        // Create a simple hash of the name to consistently select the same message
+        const nameHash = customName.split('').reduce((hash, char) => {
+            return ((hash << 5) - hash) + char.charCodeAt(0);
+        }, 0);
+        
+        const messageIndex = Math.abs(nameHash) % customMessages.length;
+        const customMessage = customMessages[messageIndex];
+        
+        const customCard = document.getElementById('custom-card');
+        customCard.classList.remove('hidden');
+        const messageElement = customCard.querySelector('.message');
+        messageElement.textContent = customMessage;
+        
+        // Add click handler for speak button
+        const speakButton = customCard.querySelector('.speak-button');
+        speakButton.onclick = () => {
+            speakMessage(customMessage);
+        };
+        
+        // Start floating hearts animation
+        createFloatingHearts();
+        return;
+    }
+
     // Show appropriate card based on name
     const messages = {
         natalia: "To my beautiful Nati, who makes my world more warm and adventurous than any volcano! \n\nHappy Valentine's Day! ❤️ \n\n- Love, Codi",
@@ -196,8 +235,45 @@ function speakMessage(message) {
     window.speechSynthesis.speak(utterance);
 }
 
+function createFloatingHearts() {
+    const container = document.querySelector('.floating-hearts');
+    container.innerHTML = ''; // Clear existing hearts
+    
+    const createHeart = () => {
+        const heart = document.createElement('div');
+        heart.innerHTML = '❤️';
+        heart.className = 'floating-heart';
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        container.appendChild(heart);
+        setTimeout(() => heart.remove(), 3000);
+    };
+
+    // Create initial hearts
+    for (let i = 0; i < 5; i++) {
+        createHeart();
+    }
+
+    // Continue creating hearts
+    setInterval(createHeart, 500);
+}
+
 // Initialize the card when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     const name = getNameFromUrl();
     showCard(name);
-}); 
+});
+
+function createCustomCard() {
+    const nameInput = document.getElementById('custom-name');
+    const name = nameInput.value.trim();
+    
+    if (name) {
+        // Update URL without refreshing
+        const url = new URL(window.location);
+        url.searchParams.set('name', 'custom-' + encodeURIComponent(name));
+        window.history.pushState({}, '', url);
+        
+        showCard('custom-' + name);
+    }
+} 

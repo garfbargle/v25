@@ -416,4 +416,52 @@ body {
 .selector-button:hover {
     background: #ff1493;
     transform: scale(1.05);
+}
+
+.custom-card-creator {
+    margin: 20px 0;
+    padding: 15px;
+    border-radius: 10px;
+    background: rgba(255, 105, 180, 0.1);
+}
+
+#custom-name {
+    padding: 8px 15px;
+    border: 2px solid #ff69b4;
+    border-radius: 20px;
+    margin: 10px;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#custom-name:focus {
+    border-color: #ff1493;
+}
+
+.floating-hearts {
+    height: 300px;
+    position: relative;
+    overflow: hidden;
+}
+
+.floating-heart {
+    position: absolute;
+    font-size: 24px;
+    animation: floatUpAndWiggle 3s ease-out forwards;
+}
+
+@keyframes floatUpAndWiggle {
+    0% {
+        transform: translateY(300px) rotate(0deg);
+        opacity: 1;
+    }
+    50% {
+        transform: translateY(150px) rotate(180deg);
+        opacity: 0.8;
+    }
+    100% {
+        transform: translateY(0) rotate(360deg);
+        opacity: 0;
+    }
 } 
