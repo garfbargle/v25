@@ -619,4 +619,92 @@ body {
 @keyframes fadeInOut {
     0%, 100% { opacity: 0; }
     50% { opacity: 0.6; }
+}
+
+/* Viktor's Hacker/Café Theme */
+.hacker-scene {
+    height: 300px;
+    background: #000;
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.binary-drop {
+    position: absolute;
+    color: #0f0;
+    font-family: monospace;
+    font-size: 14px;
+    animation: binaryRain linear forwards;
+    text-shadow: 0 0 5px #0f0;
+}
+
+.cafe-item {
+    position: absolute;
+    font-size: 24px;
+    animation: floatAcross linear forwards;
+}
+
+.bulgarian-flag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    animation: flagWave 3s infinite;
+}
+
+.flag-stripe {
+    flex: 1;
+}
+
+.flag-stripe.white {
+    background: white;
+}
+
+.flag-stripe.green {
+    background: #009B74;
+}
+
+.flag-stripe.red {
+    background: #D01C1F;
+}
+
+@keyframes binaryRain {
+    0% {
+        transform: translateY(-20px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(300px);
+        opacity: 0;
+    }
+}
+
+@keyframes floatAcross {
+    0% {
+        transform: translateX(-50px) rotate(0deg);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(350px) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+@keyframes flagWave {
+    0%, 100% {
+        transform: skew(-5deg);
+    }
+    50% {
+        transform: skew(5deg);
+    }
 } 

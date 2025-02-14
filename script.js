@@ -57,7 +57,8 @@ function showCard(name) {
         kayla: "To my tough-as-nails sister!\n\nProud of you for breaking barriers and showing them how it's done in a man's world. Keep being amazing!\n\nHappy Valentine's Day! ⚡❤️\n\nLove, Your Brother",
         tori: "To my animal-whispering sister!\n\nYour love for all creatures great and small makes the world a better place. Give all your furry (and scaly) friends a Valentine's hug from me!\n\nHappy Valentine's Day! 🐾❤️\n\nLove, Your Brother",
         kyledan: "To Kyle & Dan, the ultimate freedom fighters! 🦅\n\nKeep stacking sats and protecting liberty. Your dedication to financial freedom and American values is truly inspiring.\n\nHappy Valentine's Day! ₿❤️🇺🇸\n\nFrom your fellow sovereign individual,\nCodi",
-        erica: "To my amazing friend Erica! 💜\n\nFrom that first day of college until now, you've colored my world with your creativity and friendship. Your artistic soul and gaming spirit make you truly unique - like a rare legendary drop! 🎮\n\nHappy Valentine's Day! 🐙\n\nLove, Codi"
+        erica: "To my amazing friend Erica! 💜\n\nFrom that first day of college until now, you've colored my world with your creativity and friendship. Your artistic soul and gaming spirit make you truly unique - like a rare legendary drop! 🎮\n\nHappy Valentine's Day! 🐙\n\nLove, Codi",
+        viktor: "To my 🇧🇬h4xor friend Viktor! \n\nFrom debugging code to debugging life over Starbucks iced coffees, you've shown me what true friendship means in just a few days. Your brilliant mind for math and systems never ceases to amaze me!\n\nHappy Valentine's Day! ☕️\n\nFrom your friend irl,\nCodi"
     };
 
     const cardId = `${name}-card`;
@@ -91,6 +92,8 @@ function showCard(name) {
             createStars();
         } else if (name === 'erica') {
             animateEricaScene();
+        } else if (name === 'viktor') {
+            animateViktorScene();
         }
     } else {
         const defaultCard = document.getElementById('default-card');
@@ -340,4 +343,35 @@ function animateEricaScene() {
     // Start animations
     setInterval(createJellyfish, 2000);
     setInterval(createPaintSplash, 1000);
+}
+
+// Add Viktor's animation function
+function animateViktorScene() {
+    const container = document.querySelector('.hacker-scene');
+    const cafeItems = ['☕️', '🧀', '💻', '📐'];
+    
+    // Create binary rain effect
+    function createBinaryDrop() {
+        const drop = document.createElement('div');
+        drop.className = 'binary-drop';
+        drop.textContent = Math.random() > 0.5 ? '1' : '0';
+        drop.style.left = Math.random() * 100 + '%';
+        drop.style.animationDuration = (Math.random() * 2 + 1) + 's';
+        container.appendChild(drop);
+        setTimeout(() => drop.remove(), 2000);
+    }
+
+    // Create floating café items
+    function createCafeItem() {
+        const item = document.createElement('div');
+        item.className = 'cafe-item';
+        item.textContent = cafeItems[Math.floor(Math.random() * cafeItems.length)];
+        item.style.left = Math.random() * 100 + '%';
+        item.style.animationDuration = (Math.random() * 3 + 2) + 's';
+        container.appendChild(item);
+        setTimeout(() => item.remove(), 3000);
+    }
+
+    setInterval(createBinaryDrop, 100);
+    setInterval(createCafeItem, 1000);
 } 
