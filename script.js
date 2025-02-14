@@ -282,20 +282,75 @@ function animateHouseAndKeys() {
             particle.className = 'tropical-particle';
             particle.textContent = particles[Math.floor(Math.random() * particles.length)];
             particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.position = 'absolute';
+            particle.style.fontSize = (Math.random() * 10 + 15) + 'px';
+            particle.style.animation = 'floatParticle 3s ease-out forwards';
             container.appendChild(particle);
             setTimeout(() => particle.remove(), 3000);
         }
 
         // Create friendly snake that runs away
         const snakeContainer = document.querySelector('.snake-container');
-        const snake = snakeContainer.querySelector('.friendly-snake');
+        const snake = document.createElement('div');
+        snake.className = 'friendly-snake';
+        snake.textContent = '🐍';
+        snake.style.position = 'absolute';
+        snake.style.bottom = '20px';
+        snake.style.fontSize = '30px';
+        snake.style.transition = 'left 4s ease-in-out';
+        snakeContainer.appendChild(snake);
         
         function resetSnake() {
             snake.style.left = '-50px';
             setTimeout(() => {
-                snake.style.left = '100%';
+                snake.style.left = 'calc(100% + 50px)';
             }, 100);
         }
+
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            .tropical-particles {
+                position: relative;
+                width: 100%;
+                height: 200px;
+                overflow: hidden;
+            }
+            
+            .tropical-particle {
+                position: absolute;
+                opacity: 0;
+                transform: translate(0, 0) rotate(0deg);
+                pointer-events: none;
+            }
+            
+            .snake-container {
+                position: relative;
+                width: 100%;
+                height: 60px;
+                overflow: hidden;
+            }
+            
+            .friendly-snake {
+                transform: scaleX(-1);
+            }
+            
+            @keyframes floatParticle {
+                0% {
+                    opacity: 0;
+                    transform: translate(0, 0) rotate(0deg);
+                }
+                20% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(${Math.random() > 0.5 ? '-' : ''}100px, -100px) rotate(${Math.random() * 360}deg);
+                }
+            }
+        `;
+        document.head.appendChild(style);
 
         // Start animations
         setInterval(createParticle, 500);
