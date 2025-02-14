@@ -220,12 +220,27 @@ body {
     position: absolute;
     color: red;
     font-size: 20px;
-    animation: float 3s infinite;
+    animation: floatUp 3s ease-out forwards;
 }
 
-@keyframes float {
-    0% { transform: translateY(0) rotate(0); opacity: 1; }
-    100% { transform: translateY(-200px) rotate(360deg); opacity: 0; }
+@keyframes floatUp {
+    0% { 
+        transform: translateY(0) rotate(-10deg); 
+        opacity: 1; 
+    }
+    25% {
+        transform: translateY(-75px) rotate(10deg);
+    }
+    50% {
+        transform: translateY(-150px) rotate(-10deg);
+    }
+    75% {
+        transform: translateY(-225px) rotate(10deg);
+    }
+    100% { 
+        transform: translateY(-300px) rotate(-10deg); 
+        opacity: 0; 
+    }
 }
 
 .message {
@@ -240,4 +255,25 @@ body {
 
 .message:hover {
     transform: scale(1.02);
+}
+
+.speak-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.speak-button:hover {
+    background: #ff1493;
+    transform: scale(1.05);
+}
+
+.speak-button:active {
+    transform: scale(0.95);
 } 

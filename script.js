@@ -11,9 +11,9 @@ function showCard(name) {
 
     // Show appropriate card based on name
     const messages = {
-        natalia: "To my beautiful wife who makes my world more colorful than any volcano! Happy Valentine's Day! ❤️",
+        natalia: "To my beautiful Nati, who makes my world more fiery and adventurous than any volcano! Happy Valentine's Day! ❤️ - Love, Codi",
         kalia: "To my precious little cow lover! Daddy loves you to the moooon and back! ❤️",
-        sam: "To my awesome Minecraft champion! You're better than diamonds! Happy Valentine's Day! ❤️"
+        sam: `To my SamstaTehMonsta, Minecraft champion! You're better than netherite 𐂫! Happy Valentine's Day! ❤️ - Love, Dad`
     };
 
     const cardId = `${name}-card`;
@@ -21,7 +21,15 @@ function showCard(name) {
     
     if (card) {
         card.classList.remove('hidden');
-        card.querySelector('.message').textContent = messages[name] || '';
+        const messageElement = card.querySelector('.message');
+        messageElement.textContent = messages[name] || '';
+        
+        // Add click handler for speak button
+        const speakButton = card.querySelector('.speak-button');
+        speakButton.onclick = () => {
+            const message = messageElement.textContent;
+            speakMessage(message);
+        };
         
         if (name === 'sam') {
             createHeartParticles();
@@ -29,7 +37,15 @@ function showCard(name) {
             animateCowTail();
         }
     } else {
-        document.getElementById('default-card').classList.remove('hidden');
+        const defaultCard = document.getElementById('default-card');
+        defaultCard.classList.remove('hidden');
+        
+        // Add click handler for default card speak button
+        const speakButton = defaultCard.querySelector('.speak-button');
+        speakButton.onclick = () => {
+            const message = defaultCard.querySelector('.message').textContent;
+            speakMessage(message);
+        };
     }
 }
 
@@ -40,6 +56,7 @@ function createHeartParticles() {
         heart.innerHTML = '❤️';
         heart.className = 'heart-particle';
         heart.style.left = Math.random() * 100 + '%';
+        heart.style.bottom = '0';
         container.appendChild(heart);
         setTimeout(() => heart.remove(), 3000);
     }, 300);
@@ -61,6 +78,16 @@ function animateCowTail() {
         cow.innerHTML = cowAscii.replace(/\^\^    [\^\~\/\\]+/, newTail);
         frame = (frame + 1) % frames.length;
     }, 300);
+}
+
+function speakMessage(message) {
+    // Cancel any ongoing speech
+    window.speechSynthesis.cancel();
+    
+    const utterance = new SpeechSynthesisUtterance(message);
+    utterance.rate = 0.9; // Slightly slower rate for better clarity
+    utterance.pitch = 1.1; // Slightly higher pitch for a friendlier tone
+    window.speechSynthesis.speak(utterance);
 }
 
 // Initialize the card when the page loads
