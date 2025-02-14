@@ -59,8 +59,8 @@ function showCard(name) {
         kyledan: "To Kyle & Dan, the ultimate freedom fighters! 🦅\n\nKeep stacking sats and protecting liberty. Your dedication to financial freedom and American values is truly inspiring.\n\nHappy Valentine's Day! ₿❤️🇺🇸\n\nFrom your fellow sovereign individual,\nCodi",
         erica: "To my amazing friend Erica! 💜\n\nFrom that first day of college until now, you've colored my world with your creativity and friendship. Your artistic soul and gaming spirit make you truly unique - like a rare legendary drop! 🎮\n\nHappy Valentine's Day! 🐙\n\nLove, Codi",
         viktor: "To my 🇧🇬h4xor friend Viktor! \n\nFrom debugging code to debugging life over Starbucks iced coffees, you've shown me what true friendship means in just a few days. Your brilliant mind for math and systems never ceases to amaze me!\n\nHappy Valentine's Day! ☕️\n\nFrom your friend irl,\nCodi",
-        diran: "To my brilliant friend Diran! 🚀\n\nFrom late-night 'coding sessions' in the dorms to watching you conquer the world, you've always inspired me with your genius and generosity. Your journey from aerospace savant to crypto pioneer shows that the sky's not the limit - it's just the beginning!\n\nHappy Valentine's Day! 🇦🇲✨\n\nYour proud friend,\nCodi",
-        hani: "To my brilliant friend Hani! 🌀\n\nFrom building portals to new dimensions to crushing it in games, your ability to bring sci-fi dreams to reality never ceases to amaze me. You're the perfect blend of hardware hacker and software wizard - a true renaissance builder!\n\nHappy Valentine's Day! 🎮✨\n\nLet's game soon!\nCodi"
+        diran: "To my brilliant friend Diran! 🚀\n\nFrom late-night 'coding sessions' in the dorms to watching you conquer the world, you've always inspired me with your genius and generosity. Your journey from aerospace savant to crypto pioneer shows that the sky's not the limit - it's just the beginning!\n\nHappy Valentine's Day in Aussieland! 🇦🇲✨\n\nYour proud friend,\nCodi",
+        hani: "To my brilliant friend Hani! 🌀\n\nFrom building portals to new dimensions to crushing it in games, your ability to bring sci-fi dreams to reality never ceases to amaze me. You're the perfect blend of hardware hacker and software wizard - a true renaissance builder!\n\nHappy Valentine's Day! 🎮✨\n\nLet's game/chat/w/e soon!\nCodi"
     };
 
     const cardId = `${name}-card`;
@@ -73,10 +73,18 @@ function showCard(name) {
         
         // Add click handler for speak button
         const speakButton = card.querySelector('.speak-button');
-        if (speakButton) {  // Only add click handler if button exists
+        if (speakButton) {
             speakButton.onclick = () => {
                 const message = messageElement.textContent;
                 speakMessage(message);
+            };
+        }
+        
+        // Add click handler for reply button
+        const replyButton = card.querySelector('.reply-button');
+        if (replyButton) {
+            replyButton.onclick = () => {
+                window.location.href = `mailto:_@c0di.com?subject=Re: Valentine's Day Card`;
             };
         }
         

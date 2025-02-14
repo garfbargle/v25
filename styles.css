@@ -276,24 +276,38 @@ body {
     transform: scale(1.02);
 }
 
-.speak-button {
+.button-group {
     margin-top: 1rem;
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.speak-button,
+.reply-button {
+    width: 40px;
+    height: 40px;
+    padding: 0.5rem;
+    font-size: 1.2rem;
     background: #ff69b4;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: transform 0.2s ease, background-color 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.speak-button:hover {
+.speak-button:hover,
+.reply-button:hover {
     background: #ff1493;
     transform: scale(1.05);
 }
 
-.speak-button:active {
+.speak-button:active,
+.reply-button:active {
     transform: scale(0.95);
 }
 
