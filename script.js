@@ -13,7 +13,10 @@ function showCard(name) {
     const messages = {
         natalia: "To my beautiful Nati, who makes my world more warm and adventurous than any volcano! \n\nHappy Valentine's Day! ❤️ \n\n- Love, Codi",
         kalia: "To my precious little cow lover! \n\n Daddy loves you to the moooon and back! \n\nLove, Dad",
-        sam: `To my SamstaTehMonsta, Minecraft champion! You're better than netherite 𐂫! \n\n Happy Valentine's Day! \n\n ❤️ Love, Dad`
+        sam: `To my SamstaTehMonsta, Minecraft champion! You're better than netherite 𐂫! \n\n Happy Valentine's Day! \n\n ❤️ Love, Dad`,
+        mom: "To the strongest woman I know!\n\nYour care and dedication to our family and others is truly inspiring. Thank you for always being there.\n\nHappy Valentine's Day! ❤️\n\nLove, Your Son",
+        kayla: "To my tough-as-nails sister!\n\nProud of you for breaking barriers and showing them how it's done in a man's world. Keep being amazing!\n\nHappy Valentine's Day! ⚡❤️\n\nLove, Your Brother",
+        tori: "To my animal-whispering sister!\n\nYour love for all creatures great and small makes the world a better place. Give all your furry (and scaly) friends a Valentine's hug from me!\n\nHappy Valentine's Day! 🐾❤️\n\nLove, Your Brother"
     };
 
     const cardId = `${name}-card`;
@@ -35,6 +38,12 @@ function showCard(name) {
             createHeartParticles();
         } else if (name === 'kalia') {
             animateCowTail();
+        } else if (name === 'mom') {
+            animateHouseAndKeys();
+        } else if (name === 'kayla') {
+            animatePowerLines();
+        } else if (name === 'tori') {
+            animateAnimals();
         }
     } else {
         const defaultCard = document.getElementById('default-card');
@@ -137,6 +146,44 @@ function animateCowTail() {
 
     // Run animation
     setInterval(updateScene, 200);
+}
+
+function animateHouseAndKeys() {
+    const container = document.querySelector('.house-container');
+    setInterval(() => {
+        const key = document.createElement('div');
+        key.innerHTML = '🔑';
+        key.className = 'floating-key';
+        key.style.left = Math.random() * 100 + '%';
+        container.appendChild(key);
+        setTimeout(() => key.remove(), 3000);
+    }, 500);
+}
+
+function animatePowerLines() {
+    const container = document.querySelector('.power-lines');
+    setInterval(() => {
+        const spark = document.createElement('div');
+        spark.className = 'spark';
+        spark.style.left = Math.random() * 100 + '%';
+        container.appendChild(spark);
+        setTimeout(() => spark.remove(), 1000);
+    }, 300);
+}
+
+function animateAnimals() {
+    const container = document.querySelector('.animal-parade');
+    const animals = ['🐕', '🐈', '🐍', '🐾'];
+    let index = 0;
+    
+    setInterval(() => {
+        const animal = document.createElement('div');
+        animal.innerHTML = animals[index];
+        animal.className = 'parading-animal';
+        container.appendChild(animal);
+        setTimeout(() => animal.remove(), 4000);
+        index = (index + 1) % animals.length;
+    }, 1000);
 }
 
 function speakMessage(message) {
