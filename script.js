@@ -10,8 +10,43 @@ function getNameFromUrl() {
     }
 }
 
+function updateMetaTags(name) {
+    try {
+        // Update page title
+        let displayName = name;
+        if (name && name.startsWith('custom-')) {
+            displayName = name.replace('custom-', '');
+        }
+        
+        const title = displayName ? 
+            `To:${displayName} from:c0di` : 
+            'from:c0di';
+        
+        const description = displayName ? 
+            `to:${displayName} 💌` : 
+            'to: you 💌';
+
+        // Update document title
+        document.title = title;
+
+        // Update Open Graph meta tags
+        document.querySelector('meta[property="og:title"]').setAttribute('content', title);
+        document.querySelector('meta[property="og:description"]').setAttribute('content', description);
+
+        // Update Twitter Card meta tags
+        document.querySelector('meta[name="twitter:title"]').setAttribute('content', title);
+        document.querySelector('meta[name="twitter:description"]').setAttribute('content', description);
+
+    } catch (error) {
+        console.error('Error updating meta tags:', error);
+    }
+}
+
 function showCard(name) {
     try {
+        // Add this at the start of the showCard function
+        updateMetaTags(name);
+
         // Hide all cards
         document.querySelectorAll('.theme-card').forEach(card => {
             card.classList.add('hidden');
