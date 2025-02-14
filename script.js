@@ -93,7 +93,7 @@ function showCard(name) {
 
         // Show appropriate card based on name
         const messages = {
-            natalia: "To my beautiful Nati, who makes my world more warm and adventurous than any volcano! \n\nHappy Valentine's Day! ❤️ \n\n- Te amo mucho, Codi",
+            natalia: "To my beautiful Natalia, who makes my world more warm and adventurous than any volcano! Thank you for being such an amazing Mom to our family! \n\n To many more travels & adventures around this planet together. <3 \n\nHappy Valentine's Day! ❤️ \n\n- Te amo mucho, Codi",
             kalia: "To my precious little cow lover! \n\n Daddy loves you to the moooon and back! \n\nLove, Dad",
             sam: `To my SamstaTehMonsta, Minecraft champion! You're better than netherite 𐂫! \n\n Happy Valentine's Day! \n\n ❤️ Love, Dad`,
             mom: "To the bravest Grandma in the world! 🦸‍♀️\n\nI know you're a bit scared of those sneaky snakes in Costa Rica, but guess what? They're more afraid of you than you are of them! 🐍💚 We all can't wait for you to come visit and experience the beauty of this amazing place! It's a paradise filled with sunshine, adventure, and love! 🌴✨ Maybe we can even find a fun way to help you face those fears—how about a little hypnosis magic? 🎩💖\n\nHappy Valentine's Day! ❤️\n\nLove, Your Son",
@@ -151,6 +151,8 @@ function showCard(name) {
                 animateDiranScene();
             } else if (name === 'hani') {
                 animateHaniScene();
+            } else if (name === 'natalia') {
+                animateCostaRicaScene();
             }
         } else {
             const defaultCard = document.getElementById('default-card');
@@ -602,4 +604,187 @@ function animateHaniScene() {
     
     setInterval(createPortalParticle, 50);
     setInterval(createGameIcon, 1000);
-} 
+}
+
+// Add animation function for Natalia's Costa Rica adventure scene
+function animateCostaRicaScene() {
+    const container = document.querySelector('.costa-rica-scene');
+    if (!container) return;
+
+    // Create beach elements
+    const beach = document.createElement('div');
+    beach.className = 'beach';
+    container.appendChild(beach);
+
+    // Create mountain/volcano
+    const volcano = document.createElement('div');
+    volcano.className = 'volcano';
+    container.appendChild(volcano);
+
+    // Create van
+    const van = document.createElement('div');
+    van.className = 'adventure-van';
+    van.innerHTML = '🚐';
+    container.appendChild(van);
+
+    // Create lava particles
+    function createLavaParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'lava-particle';
+        
+        // Create multiple particles with different trajectories
+        const side = Math.random() > 0.5 ? 1 : -1;
+        const distance = 30 + Math.random() * 40;
+        
+        particle.style.left = `${70 + Math.random() * 10}%`;
+        particle.style.top = '20%';
+        particle.style.setProperty('--distance', `${distance * side}px`);
+        particle.style.setProperty('--delay', `${Math.random() * 0.5}s`);
+        particle.style.background = `hsl(${Math.random() * 30 + 10}, 100%, ${50 + Math.random() * 20}%)`; // Orange-red colors
+        
+        container.appendChild(particle);
+        setTimeout(() => particle.remove(), 2000);
+    }
+
+    // Create beach particles
+    function createBeachParticle() {
+        const beachElements = ['🌊', '🏖️', '🌴', '🦜'];
+        const particle = document.createElement('div');
+        particle.className = 'beach-particle';
+        particle.innerHTML = beachElements[Math.floor(Math.random() * beachElements.length)];
+        particle.style.left = `${Math.random() * 30}%`;
+        particle.style.bottom = '10%';
+        container.appendChild(particle);
+        setTimeout(() => particle.remove(), 3000);
+    }
+
+    // Animate van movement
+    let position = 0;
+    const animateVan = () => {
+        position += 0.5;
+        if (position <= 100) {
+            van.style.left = `${position}%`;
+            van.style.bottom = `${10 + Math.sin(position / 10) * 5}%`; // Add bouncing effect
+            van.style.transform = 'scaleX(-1)'; // Flip the van to face right
+            requestAnimationFrame(animateVan);
+        } else {
+            position = 0;
+            requestAnimationFrame(animateVan);
+        }
+    };
+
+    // Start animations
+    animateVan();
+    setInterval(createLavaParticle, 100); // More frequent lava particles
+    setInterval(createBeachParticle, 2000);
+}
+
+// Update the Costa Rica scene styles
+const costaRicaStyle = document.createElement('style');
+costaRicaStyle.textContent = `
+    .costa-rica-scene {
+        position: relative;
+        width: 100%;
+        height: 200px;
+        overflow: hidden;
+        background: linear-gradient(180deg, 
+            #FF851B 0%, /* Sunset orange */
+            #87CEEB 20%, /* Sky blue */
+            #87CEEB 60%,
+            #FFD700 100% /* Beach sand */
+        );
+    }
+
+    .beach {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40%;
+        height: 40%;
+        background: #FFD700;
+        border-radius: 0 100% 0 0;
+        transform-origin: bottom left;
+        animation: beachWave 5s ease-in-out infinite;
+    }
+
+    .beach::before {
+        content: '🌴';
+        position: absolute;
+        font-size: 40px;
+        left: 20%;
+        bottom: 60%;
+        animation: palmSway 3s ease-in-out infinite;
+    }
+
+    .beach::after {
+        content: '🌊';
+        position: absolute;
+        font-size: 30px;
+        left: 40%;
+        bottom: 20%;
+        animation: waveRoll 2s linear infinite;
+    }
+
+    .volcano {
+        position: absolute;
+        bottom: 0;
+        right: 10%;
+        width: 30%;
+        height: 70%;
+        background: linear-gradient(45deg, #8B4513, #A0522D);
+        clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+        animation: volcanoGlow 4s ease-in-out infinite;
+    }
+
+    .lava-particle {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        filter: blur(2px);
+        animation: lavaTrajectory 2s ease-out forwards;
+        opacity: 0.8;
+    }
+
+    .adventure-van {
+        position: absolute;
+        bottom: 15%;
+        left: 0;
+        font-size: 2em;
+        animation: vanDrive 10s linear infinite;
+    }
+
+    @keyframes lavaTrajectory {
+        0% {
+            transform: translateX(0) translateY(0);
+            opacity: 1;
+        }
+        50% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateX(var(--distance)) translateY(100px);
+            opacity: 0;
+        }
+    }
+
+    @keyframes vanDrive {
+        0% {
+            left: -10%;
+            transform: translateY(0) scaleX(-1);
+        }
+        50% {
+            left: 110%;
+            transform: translateY(-30px) scaleX(-1);
+        }
+        50.1% {
+            left: -10%;
+            transform: translateY(-30px) scaleX(-1);
+        }
+        100% {
+            left: 110%;
+            transform: translateY(0) scaleX(-1);
+        }
+    }
+`;
+document.head.appendChild(costaRicaStyle); 
