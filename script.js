@@ -96,7 +96,7 @@ function showCard(name) {
             natalia: "To my beautiful Nati, who makes my world more warm and adventurous than any volcano! \n\nHappy Valentine's Day! ❤️ \n\n- Te amo mucho, Codi",
             kalia: "To my precious little cow lover! \n\n Daddy loves you to the moooon and back! \n\nLove, Dad",
             sam: `To my SamstaTehMonsta, Minecraft champion! You're better than netherite 𐂫! \n\n Happy Valentine's Day! \n\n ❤️ Love, Dad`,
-            mom: "To the strongest woman I know!\n\nYour care and dedication to our family and others is truly inspiring. Thank you for always being there.\n\nHappy Valentine's Day! ❤️\n\nLove, Your Son",
+            mom: "To the bravest Grandma in the world! 🦸‍♀️\n\nI know you're a bit scared of those sneaky snakes in Costa Rica, but guess what? They're more afraid of you than you are of them! 🐍💚 We all can't wait for you to come visit and experience the beauty of this amazing place! It's a paradise filled with sunshine, adventure, and love! 🌴✨ Maybe we can even find a fun way to help you face those fears—how about a little hypnosis magic? 🎩💖\n\nHappy Valentine's Day! ❤️\n\nLove, Your Son",
             kayla: "To my tough-as-nails sister!\n\nProud of you for breaking barriers and showing them how it's done in a man's world. Keep being amazing!\n\nHappy Valentine's Day! ⚡❤️\n\nLove, Your Brother",
             tori: "To my animal-whispering sister!\n\nYour love for all creatures great and small makes the world a better place. Give all your furry (and scaly) friends a Valentine's hug from me!\n\nHappy Valentine's Day! 🐾❤️\n\nLove, Your Brother",
             kyledan: "To Kyle & Dan, the ultimate freedom fighters! 🦅\n\nKeep stacking sats and protecting liberty. Your dedication to financial freedom and American values is truly inspiring.\n\nHappy Valentine's Day! ₿❤️🇺🇸\n\nFrom your fellow sovereign individual,\nCodi",
@@ -267,15 +267,40 @@ function animateCowTail() {
 }
 
 function animateHouseAndKeys() {
-    const container = document.querySelector('.house-container');
-    setInterval(() => {
-        const key = document.createElement('div');
-        key.innerHTML = '🔑';
-        key.className = 'floating-key';
-        key.style.left = Math.random() * 100 + '%';
-        container.appendChild(key);
-        setTimeout(() => key.remove(), 3000);
-    }, 500);
+    try {
+        const container = document.querySelector('.tropical-particles');
+        const particles = ['🌺', '🦋', '✨', '🌸', '🍃'];
+        
+        // Create tropical particles
+        function createParticle() {
+            const particle = document.createElement('div');
+            particle.className = 'tropical-particle';
+            particle.textContent = particles[Math.floor(Math.random() * particles.length)];
+            particle.style.left = Math.random() * 100 + '%';
+            container.appendChild(particle);
+            setTimeout(() => particle.remove(), 3000);
+        }
+
+        // Create friendly snake that runs away
+        const snakeContainer = document.querySelector('.snake-container');
+        const snake = snakeContainer.querySelector('.friendly-snake');
+        
+        function resetSnake() {
+            snake.style.left = '-50px';
+            setTimeout(() => {
+                snake.style.left = '100%';
+            }, 100);
+        }
+
+        // Start animations
+        setInterval(createParticle, 500);
+        setInterval(resetSnake, 8000);
+        
+        // Initial snake animation
+        resetSnake();
+    } catch (error) {
+        console.error('Error animating tropical scene:', error);
+    }
 }
 
 function animatePowerLines() {
