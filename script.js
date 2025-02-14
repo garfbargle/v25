@@ -58,7 +58,8 @@ function showCard(name) {
         tori: "To my animal-whispering sister!\n\nYour love for all creatures great and small makes the world a better place. Give all your furry (and scaly) friends a Valentine's hug from me!\n\nHappy Valentine's Day! 🐾❤️\n\nLove, Your Brother",
         kyledan: "To Kyle & Dan, the ultimate freedom fighters! 🦅\n\nKeep stacking sats and protecting liberty. Your dedication to financial freedom and American values is truly inspiring.\n\nHappy Valentine's Day! ₿❤️🇺🇸\n\nFrom your fellow sovereign individual,\nCodi",
         erica: "To my amazing friend Erica! 💜\n\nFrom that first day of college until now, you've colored my world with your creativity and friendship. Your artistic soul and gaming spirit make you truly unique - like a rare legendary drop! 🎮\n\nHappy Valentine's Day! 🐙\n\nLove, Codi",
-        viktor: "To my 🇧🇬h4xor friend Viktor! \n\nFrom debugging code to debugging life over Starbucks iced coffees, you've shown me what true friendship means in just a few days. Your brilliant mind for math and systems never ceases to amaze me!\n\nHappy Valentine's Day! ☕️\n\nFrom your friend irl,\nCodi"
+        viktor: "To my 🇧🇬h4xor friend Viktor! \n\nFrom debugging code to debugging life over Starbucks iced coffees, you've shown me what true friendship means in just a few days. Your brilliant mind for math and systems never ceases to amaze me!\n\nHappy Valentine's Day! ☕️\n\nFrom your friend irl,\nCodi",
+        diran: "To my brilliant friend Diran! 🚀\n\nFrom late-night 'coding sessions' in the dorms to watching you conquer the world, you've always inspired me with your genius and generosity. Your journey from aerospace savant to crypto pioneer shows that the sky's not the limit - it's just the beginning!\n\nHappy Valentine's Day! 🇦🇲✨\n\nYour proud friend,\nCodi"
     };
 
     const cardId = `${name}-card`;
@@ -94,6 +95,8 @@ function showCard(name) {
             animateEricaScene();
         } else if (name === 'viktor') {
             animateViktorScene();
+        } else if (name === 'diran') {
+            animateDiranScene();
         }
     } else {
         const defaultCard = document.getElementById('default-card');
@@ -374,4 +377,35 @@ function animateViktorScene() {
 
     setInterval(createBinaryDrop, 100);
     setInterval(createCafeItem, 1000);
+}
+
+// Add Diran's animation function
+function animateDiranScene() {
+    const container = document.querySelector('.aerospace-scene');
+    
+    // Create code particles
+    function createCodeParticle() {
+        const codes = ['if', 'for', '{}', '()', '=>'];
+        const particle = document.createElement('div');
+        particle.className = 'code-particle';
+        particle.textContent = codes[Math.floor(Math.random() * codes.length)];
+        particle.style.left = Math.random() * 100 + '%';
+        container.appendChild(particle);
+        setTimeout(() => particle.remove(), 3000);
+    }
+    
+    // Create crypto symbols
+    function createCryptoSymbol() {
+        const symbols = ['₿', 'Ξ', '◈', '₳', '⟠'];
+        const symbol = document.createElement('div');
+        symbol.className = 'crypto-symbol';
+        symbol.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+        symbol.style.left = Math.random() * 100 + '%';
+        container.appendChild(symbol);
+        setTimeout(() => symbol.remove(), 4000);
+    }
+    
+    // Start animations
+    setInterval(createCodeParticle, 500);
+    setInterval(createCryptoSymbol, 1000);
 } 
