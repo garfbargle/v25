@@ -1,0 +1,243 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    background: #ff69b4;
+}
+
+.theme-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    text-align: center;
+    min-width: 300px;
+    min-height: 400px;
+    animation: cardEntrance 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.theme-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 30px rgba(0,0,0,0.3);
+}
+
+@keyframes cardEntrance {
+    from {
+        opacity: 0;
+        transform: scale(0.8) translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+.hidden {
+    display: none;
+}
+
+/* Natalia's Volcano Theme */
+.volcano {
+    position: relative;
+    height: 300px;
+    perspective: 1000px;
+}
+
+.mountain {
+    width: 0;
+    height: 0;
+    border-left: 100px solid transparent;
+    border-right: 100px solid transparent;
+    border-bottom: 200px solid #4a4a4a;
+    position: relative;
+    margin: 0 auto;
+    transform-style: preserve-3d;
+    animation: mountainGlow 3s infinite;
+}
+
+.mountain::after {
+    content: '';
+    position: absolute;
+    top: 50px;
+    left: -60px;
+    width: 120px;
+    height: 100px;
+    background: linear-gradient(45deg, #ff4500, #ff6b6b);
+    clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+    opacity: 0.6;
+    animation: craterGlow 2s infinite;
+}
+
+.lava {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 20px;
+    height: 0;
+    background: linear-gradient(to top, #ff4500, #ff8c00);
+    filter: blur(2px);
+    animation: eruption 2s infinite;
+}
+
+.smoke {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 10px;
+    background: #666;
+    border-radius: 50%;
+    animation: smoking 3s infinite;
+}
+
+@keyframes mountainGlow {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.2); }
+}
+
+@keyframes craterGlow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 0.8; }
+}
+
+@keyframes eruption {
+    0% { height: 0; }
+    50% { height: 100px; }
+    100% { height: 0; }
+}
+
+@keyframes smoking {
+    0% { 
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+    100% { 
+        transform: translateX(-50%) scale(3);
+        opacity: 0;
+    }
+}
+
+/* Kalia's Cow Theme */
+.ascii-cow {
+    font-family: monospace;
+    white-space: pre;
+    font-size: 20px;
+    margin: 2rem 0;
+    animation: cowAnimation 1s infinite;
+}
+
+@keyframes cowAnimation {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Sam's Minecraft Theme */
+.minecraft-world {
+    height: 300px;
+    background: repeating-linear-gradient(
+        to bottom,
+        #7fb238 0px,
+        #7fb238 20px,
+        #71a032 20px,
+        #71a032 40px
+    );
+    position: relative;
+    image-rendering: pixelated;
+    border: 8px solid #593d29;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+}
+
+.creeper {
+    width: 100px;
+    height: 100px;
+    background: linear-gradient(
+        to bottom,
+        #50b238 0%,
+        #50b238 90%,
+        #458c2f 90%,
+        #458c2f 100%
+    );
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    animation: creeperBob 2s infinite;
+}
+
+.creeper::before,
+.creeper::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background: #111;
+    top: 30px;
+}
+
+.creeper::before {
+    left: 20px;
+    box-shadow: 
+        40px 0 #111,
+        0 -10px #50b238,
+        0 10px #50b238,
+        40px -10px #50b238,
+        40px 10px #50b238;
+}
+
+.creeper::after {
+    left: 35px;
+    top: 60px;
+    width: 30px;
+    height: 15px;
+    background: #111;
+}
+
+@keyframes creeperBob {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+}
+
+.heart-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.heart-particle {
+    position: absolute;
+    color: red;
+    font-size: 20px;
+    animation: float 3s infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) rotate(0); opacity: 1; }
+    100% { transform: translateY(-200px) rotate(360deg); opacity: 0; }
+}
+
+.message {
+    margin-top: 2rem;
+    font-size: 1.5rem;
+    color: #ff1493;
+    padding: 1rem;
+    border-radius: 10px;
+    background: linear-gradient(45deg, rgba(255,20,147,0.1), rgba(255,105,180,0.1));
+    transition: transform 0.3s ease;
+}
+
+.message:hover {
+    transform: scale(1.02);
+} 
