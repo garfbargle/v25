@@ -1,208 +1,234 @@
 function getNameFromUrl() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('name')?.toLowerCase();
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get('name')?.toLowerCase();
+        console.log('URL name parameter:', name);
+        return name;
+    } catch (error) {
+        console.error('Error getting name from URL:', error);
+        return null;
+    }
 }
 
 function showCard(name) {
-    // Hide all cards
-    document.querySelectorAll('.theme-card').forEach(card => {
-        card.classList.add('hidden');
-    });
+    try {
+        // Hide all cards
+        document.querySelectorAll('.theme-card').forEach(card => {
+            card.classList.add('hidden');
+        });
 
-    // Check if it's a custom card
-    if (name && name.startsWith('custom-')) {
-        const customName = name.replace('custom-', '');
-        const customMessages = [
-            `Dear ${customName},\n\nYour smile brightens every room you enter and your kindness touches everyone around you. On this Valentine's Day, I hope you feel as special as you make others feel!\n\nHappy Valentine's Day! ❤️\n\nWith love,\nYour Secret Admirer`,
+        // Check if it's a custom card
+        if (name && name.startsWith('custom-')) {
+            const customName = name.replace('custom-', '');
+            const customMessages = [
+                `Dear ${customName},\n\nYour smile brightens every room you enter and your kindness touches everyone around you. On this Valentine's Day, I hope you feel as special as you make others feel!\n\nHappy Valentine's Day! ❤️\n\nWith love,\nYour Secret Admirer`,
+                
+                `Dear ${customName},\n\nLike a star in the night sky, you shine with your own unique light. May your Valentine's Day be as brilliant and special as you are!\n\nHappy Valentine's Day! ✨❤️\n\nWarmest wishes,\nYour Secret Admirer`,
+                
+                `Dear ${customName},\n\nYour presence makes the world a better place. Thank you for being the wonderful person that you are!\n\nHappy Valentine's Day! 🌟❤️\n\nWith appreciation,\nYour Secret Admirer`,
+                
+                `Dear ${customName},\n\nEvery day is brighter because you're in it. Your energy and spirit are truly one of a kind!\n\nHappy Valentine's Day! 🌈❤️\n\nCheers to you,\nYour Secret Admirer`,
+                
+                `Dear ${customName},\n\nYou have a heart of gold and a spirit that inspires. Never stop being the amazing person you are!\n\nHappy Valentine's Day! 💫❤️\n\nWith admiration,\nYour Secret Admirer`
+            ];
             
-            `Dear ${customName},\n\nLike a star in the night sky, you shine with your own unique light. May your Valentine's Day be as brilliant and special as you are!\n\nHappy Valentine's Day! ✨❤️\n\nWarmest wishes,\nYour Secret Admirer`,
+            // Create a simple hash of the name to consistently select the same message
+            const nameHash = customName.split('').reduce((hash, char) => {
+                return ((hash << 5) - hash) + char.charCodeAt(0);
+            }, 0);
             
-            `Dear ${customName},\n\nYour presence makes the world a better place. Thank you for being the wonderful person that you are!\n\nHappy Valentine's Day! 🌟❤️\n\nWith appreciation,\nYour Secret Admirer`,
+            const messageIndex = Math.abs(nameHash) % customMessages.length;
+            const customMessage = customMessages[messageIndex];
             
-            `Dear ${customName},\n\nEvery day is brighter because you're in it. Your energy and spirit are truly one of a kind!\n\nHappy Valentine's Day! 🌈❤️\n\nCheers to you,\nYour Secret Admirer`,
+            const customCard = document.getElementById('custom-card');
+            customCard.classList.remove('hidden');
+            const messageElement = customCard.querySelector('.message');
+            messageElement.textContent = customMessage;
             
-            `Dear ${customName},\n\nYou have a heart of gold and a spirit that inspires. Never stop being the amazing person you are!\n\nHappy Valentine's Day! 💫❤️\n\nWith admiration,\nYour Secret Admirer`
-        ];
-        
-        // Create a simple hash of the name to consistently select the same message
-        const nameHash = customName.split('').reduce((hash, char) => {
-            return ((hash << 5) - hash) + char.charCodeAt(0);
-        }, 0);
-        
-        const messageIndex = Math.abs(nameHash) % customMessages.length;
-        const customMessage = customMessages[messageIndex];
-        
-        const customCard = document.getElementById('custom-card');
-        customCard.classList.remove('hidden');
-        const messageElement = customCard.querySelector('.message');
-        messageElement.textContent = customMessage;
-        
-        // Add click handler for speak button
-        const speakButton = customCard.querySelector('.speak-button');
-        speakButton.onclick = () => {
-            speakMessage(customMessage);
-        };
-        
-        // Start floating hearts animation
-        createFloatingHearts();
-        return;
-    }
-
-    // Show appropriate card based on name
-    const messages = {
-        natalia: "To my beautiful Nati, who makes my world more warm and adventurous than any volcano! \n\nHappy Valentine's Day! ❤️ \n\n- Te amo mucho, Codi",
-        kalia: "To my precious little cow lover! \n\n Daddy loves you to the moooon and back! \n\nLove, Dad",
-        sam: `To my SamstaTehMonsta, Minecraft champion! You're better than netherite 𐂫! \n\n Happy Valentine's Day! \n\n ❤️ Love, Dad`,
-        mom: "To the strongest woman I know!\n\nYour care and dedication to our family and others is truly inspiring. Thank you for always being there.\n\nHappy Valentine's Day! ❤️\n\nLove, Your Son",
-        kayla: "To my tough-as-nails sister!\n\nProud of you for breaking barriers and showing them how it's done in a man's world. Keep being amazing!\n\nHappy Valentine's Day! ⚡❤️\n\nLove, Your Brother",
-        tori: "To my animal-whispering sister!\n\nYour love for all creatures great and small makes the world a better place. Give all your furry (and scaly) friends a Valentine's hug from me!\n\nHappy Valentine's Day! 🐾❤️\n\nLove, Your Brother",
-        kyledan: "To Kyle & Dan, the ultimate freedom fighters! 🦅\n\nKeep stacking sats and protecting liberty. Your dedication to financial freedom and American values is truly inspiring.\n\nHappy Valentine's Day! ₿❤️🇺🇸\n\nFrom your fellow sovereign individual,\nCodi",
-        erica: "To my amazing friend Erica! 💜\n\nFrom that first day of college until now, you've colored my world with your creativity and friendship. Your artistic soul and gaming spirit make you truly unique - like a rare legendary drop! 🎮\n\nHappy Valentine's Day! 🐙\n\nLove, Codi",
-        viktor: "To my 🇧🇬h4xor friend Viktor! \n\nFrom debugging code to debugging life over Starbucks iced coffees, you've shown me what true friendship means in just a few days. Your brilliant mind for math and systems never ceases to amaze me!\n\nHappy Valentine's Day! ☕️\n\nFrom your friend irl,\nCodi",
-        diran: "To my brilliant friend Diran! 🚀\n\nFrom late-night 'coding sessions' in the dorms to watching you conquer the world, you've always inspired me with your genius and generosity. Your journey from aerospace savant to crypto pioneer shows that the sky's not the limit - it's just the beginning!\n\nHappy Valentine's Day in Aussieland! 🇦🇲✨\n\nYour proud friend,\nCodi",
-        hani: "To my brilliant friend Hani! 🌀\n\nFrom building portals to new dimensions to crushing it in games, your ability to bring sci-fi dreams to reality never ceases to amaze me. You're the perfect blend of hardware hacker and software wizard - a true renaissance builder!\n\nHappy Valentine's Day! 🎮✨\n\nLet's game/chat/w/e soon!\nCodi"
-    };
-
-    const cardId = `${name}-card`;
-    const card = document.getElementById(cardId);
-    
-    if (card) {
-        card.classList.remove('hidden');
-        const messageElement = card.querySelector('.message');
-        messageElement.textContent = messages[name] || '';
-        
-        // Add click handler for speak button
-        const speakButton = card.querySelector('.speak-button');
-        if (speakButton) {
+            // Add click handler for speak button
+            const speakButton = customCard.querySelector('.speak-button');
             speakButton.onclick = () => {
-                const message = messageElement.textContent;
-                speakMessage(message);
+                speakMessage(customMessage);
             };
+            
+            // Start floating hearts animation
+            createFloatingHearts();
+            return;
         }
+
+        // Show appropriate card based on name
+        const messages = {
+            natalia: "To my beautiful Nati, who makes my world more warm and adventurous than any volcano! \n\nHappy Valentine's Day! ❤️ \n\n- Te amo mucho, Codi",
+            kalia: "To my precious little cow lover! \n\n Daddy loves you to the moooon and back! \n\nLove, Dad",
+            sam: `To my SamstaTehMonsta, Minecraft champion! You're better than netherite 𐂫! \n\n Happy Valentine's Day! \n\n ❤️ Love, Dad`,
+            mom: "To the strongest woman I know!\n\nYour care and dedication to our family and others is truly inspiring. Thank you for always being there.\n\nHappy Valentine's Day! ❤️\n\nLove, Your Son",
+            kayla: "To my tough-as-nails sister!\n\nProud of you for breaking barriers and showing them how it's done in a man's world. Keep being amazing!\n\nHappy Valentine's Day! ⚡❤️\n\nLove, Your Brother",
+            tori: "To my animal-whispering sister!\n\nYour love for all creatures great and small makes the world a better place. Give all your furry (and scaly) friends a Valentine's hug from me!\n\nHappy Valentine's Day! 🐾❤️\n\nLove, Your Brother",
+            kyledan: "To Kyle & Dan, the ultimate freedom fighters! 🦅\n\nKeep stacking sats and protecting liberty. Your dedication to financial freedom and American values is truly inspiring.\n\nHappy Valentine's Day! ₿❤️🇺🇸\n\nFrom your fellow sovereign individual,\nCodi",
+            erica: "To my amazing friend Erica! 💜\n\nFrom that first day of college until now, you've colored my world with your creativity and friendship. Your artistic soul and gaming spirit make you truly unique - like a rare legendary drop! 🎮\n\nHappy Valentine's Day! 🐙\n\nLove, Codi",
+            viktor: "To my 🇧🇬h4xor friend Viktor! \n\nFrom debugging code to debugging life over Starbucks iced coffees, you've shown me what true friendship means in just a few days. Your brilliant mind for math and systems never ceases to amaze me!\n\nHappy Valentine's Day! ☕️\n\nFrom your friend irl,\nCodi",
+            diran: "To my brilliant friend Diran! 🚀\n\nFrom late-night 'coding sessions' in the dorms to watching you conquer the world, you've always inspired me with your genius and generosity. Your journey from aerospace savant to crypto pioneer shows that the sky's not the limit - it's just the beginning!\n\nHappy Valentine's Day in Aussieland! 🇦🇲✨\n\nYour proud friend,\nCodi",
+            hani: "To my brilliant friend Hani! 🌀\n\nFrom building portals to new dimensions to crushing it in games, your ability to bring sci-fi dreams to reality never ceases to amaze me. You're the perfect blend of hardware hacker and software wizard - a true renaissance builder!\n\nHappy Valentine's Day! 🎮✨\n\nLet's game/chat/w/e soon!\nCodi"
+        };
+
+        const cardId = `${name}-card`;
+        const card = document.getElementById(cardId);
         
-        // Add click handler for reply button
-        const replyButton = card.querySelector('.reply-button');
-        if (replyButton) {
-            replyButton.onclick = () => {
-                window.location.href = `mailto:_@c0di.com?subject=Re: Valentine's Day Card`;
-            };
+        if (card) {
+            card.classList.remove('hidden');
+            const messageElement = card.querySelector('.message');
+            messageElement.textContent = messages[name] || '';
+            
+            // Add click handler for speak button
+            const speakButton = card.querySelector('.speak-button');
+            if (speakButton) {
+                speakButton.onclick = () => {
+                    const message = messageElement.textContent;
+                    speakMessage(message);
+                };
+            }
+            
+            // Add click handler for reply button
+            const replyButton = card.querySelector('.reply-button');
+            if (replyButton) {
+                replyButton.onclick = () => {
+                    window.location.href = `mailto:_@c0di.com?subject=Re: Valentine's Day Card`;
+                };
+            }
+            
+            if (name === 'sam') {
+                createHeartParticles();
+            } else if (name === 'kalia') {
+                animateCowTail();
+            } else if (name === 'mom') {
+                animateHouseAndKeys();
+            } else if (name === 'kayla') {
+                animatePowerLines();
+            } else if (name === 'tori') {
+                animateAnimals();
+            } else if (name === 'kyledan') {
+                createStars();
+            } else if (name === 'erica') {
+                animateEricaScene();
+            } else if (name === 'viktor') {
+                animateViktorScene();
+            } else if (name === 'diran') {
+                animateDiranScene();
+            } else if (name === 'hani') {
+                animateHaniScene();
+            }
+        } else {
+            const defaultCard = document.getElementById('default-card');
+            defaultCard.classList.remove('hidden');
         }
-        
-        if (name === 'sam') {
-            createHeartParticles();
-        } else if (name === 'kalia') {
-            animateCowTail();
-        } else if (name === 'mom') {
-            animateHouseAndKeys();
-        } else if (name === 'kayla') {
-            animatePowerLines();
-        } else if (name === 'tori') {
-            animateAnimals();
-        } else if (name === 'kyledan') {
-            createStars();
-        } else if (name === 'erica') {
-            animateEricaScene();
-        } else if (name === 'viktor') {
-            animateViktorScene();
-        } else if (name === 'diran') {
-            animateDiranScene();
-        } else if (name === 'hani') {
-            animateHaniScene();
-        }
-    } else {
+    } catch (error) {
+        console.error('Error showing card:', error);
+        // Show default card as fallback
         const defaultCard = document.getElementById('default-card');
-        defaultCard.classList.remove('hidden');
+        if (defaultCard) {
+            defaultCard.classList.remove('hidden');
+        }
     }
 }
 
 function createHeartParticles() {
-    const container = document.querySelector('.heart-particles');
-    setInterval(() => {
-        const heart = document.createElement('div');
-        heart.innerHTML = '❤️';
-        heart.className = 'heart-particle';
-        heart.style.left = Math.random() * 100 + '%';
-        heart.style.bottom = '0';
-        container.appendChild(heart);
-        setTimeout(() => heart.remove(), 3000);
-    }, 300);
+    try {
+        const container = document.querySelector('.heart-particles');
+        if (!container) return;
+        setInterval(() => {
+            const heart = document.createElement('div');
+            heart.innerHTML = '❤️';
+            heart.className = 'heart-particle';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.bottom = '0';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 3000);
+        }, 300);
+    } catch (error) {
+        console.error('Error creating heart particles:', error);
+    }
 }
 
 function animateCowTail() {
-    const cowAscii = document.getElementById('cow');
-    let heartPosition = 0;
-    let phase = 'up';
-    let raining = false;
-    let rainHearts = [];
-    
-    function updateScene() {
-        const lines = cowAscii.innerText.split('\n');
-        const heartLine = '    ❤️';
-        const emptyLine = '     ';
+    try {
+        const cowAscii = document.getElementById('cow');
+        if (!cowAscii) return;
+        let heartPosition = 0;
+        let phase = 'up';
+        let raining = false;
+        let rainHearts = [];
         
-        // Update moon expression
-        lines[0] = phase === 'down' ? 
-            '    🌝 *  .  *' :  // Full moon when heart reaches
-            '    🌛 *  .  *';   // Crescent moon normally
-        lines[1] = '     ⋆  ✦  ⋆';
+        function updateScene() {
+            const lines = cowAscii.innerText.split('\n');
+            const heartLine = '    ❤️';
+            const emptyLine = '     ';
             
-        // Clear previous heart positions
-        for (let i = 2; i < 8; i++) {
-            lines[i] = emptyLine;
-        }
-        
-        // Handle rising heart
-        if (phase === 'up' && heartPosition < 6) {
-            lines[7 - heartPosition] = heartLine;
-        }
-        
-        // Handle raining hearts
-        if (raining) {
-            // Update existing rain hearts
-            rainHearts = rainHearts.map(heart => ({
-                ...heart,
-                y: heart.y + 1
-            })).filter(heart => heart.y < 6);
+            // Update moon expression
+            lines[0] = phase === 'down' ? 
+                '    🌝 *  .  *' :  // Full moon when heart reaches
+                '    🌛 *  .  *';   // Crescent moon normally
+            lines[1] = '     ⋆  ✦  ⋆';
+                
+            // Clear previous heart positions
+            for (let i = 2; i < 8; i++) {
+                lines[i] = emptyLine;
+            }
             
-            // Add new rain heart every few frames
-            if (Math.random() < 0.3) {
-                rainHearts.push({
-                    x: Math.floor(Math.random() * 5) * 4,  // Random x position
-                    y: 0
+            // Handle rising heart
+            if (phase === 'up' && heartPosition < 6) {
+                lines[7 - heartPosition] = heartLine;
+            }
+            
+            // Handle raining hearts
+            if (raining) {
+                // Update existing rain hearts
+                rainHearts = rainHearts.map(heart => ({
+                    ...heart,
+                    y: heart.y + 1
+                })).filter(heart => heart.y < 6);
+                
+                // Add new rain heart every few frames
+                if (Math.random() < 0.3) {
+                    rainHearts.push({
+                        x: Math.floor(Math.random() * 5) * 4,  // Random x position
+                        y: 0
+                    });
+                }
+                
+                // Draw rain hearts
+                rainHearts.forEach(heart => {
+                    if (heart.y < 6) {
+                        const lineContent = lines[heart.y + 2];
+                        lines[heart.y + 2] = lineContent.substring(0, heart.x) + '❤️' + 
+                            lineContent.substring(heart.x + 2);
+                    }
                 });
             }
             
-            // Draw rain hearts
-            rainHearts.forEach(heart => {
-                if (heart.y < 6) {
-                    const lineContent = lines[heart.y + 2];
-                    lines[heart.y + 2] = lineContent.substring(0, heart.x) + '❤️' + 
-                        lineContent.substring(heart.x + 2);
+            // Update animation state
+            if (phase === 'up') {
+                heartPosition++;
+                if (heartPosition >= 6) {
+                    phase = 'down';
+                    raining = true;
+                    // Reset heart position for next cycle
+                    setTimeout(() => {
+                        phase = 'up';
+                        heartPosition = 0;
+                        raining = false;
+                        rainHearts = [];
+                    }, 4000);  // Rain for 4 seconds
                 }
-            });
-        }
-        
-        // Update animation state
-        if (phase === 'up') {
-            heartPosition++;
-            if (heartPosition >= 6) {
-                phase = 'down';
-                raining = true;
-                // Reset heart position for next cycle
-                setTimeout(() => {
-                    phase = 'up';
-                    heartPosition = 0;
-                    raining = false;
-                    rainHearts = [];
-                }, 4000);  // Rain for 4 seconds
             }
+            
+            cowAscii.innerText = lines.join('\n');
         }
-        
-        cowAscii.innerText = lines.join('\n');
-    }
 
-    // Run animation
-    setInterval(updateScene, 200);
+        // Run animation
+        setInterval(updateScene, 200);
+    } catch (error) {
+        console.error('Error animating cow tail:', error);
+    }
 }
 
 function animateHouseAndKeys() {
@@ -264,13 +290,22 @@ function createStars() {
 }
 
 function speakMessage(message) {
-    // Cancel any ongoing speech
-    window.speechSynthesis.cancel();
-    
-    const utterance = new SpeechSynthesisUtterance(message);
-    utterance.rate = 0.9; // Slightly slower rate for better clarity
-    utterance.pitch = 1.1; // Slightly higher pitch for a friendlier tone
-    window.speechSynthesis.speak(utterance);
+    try {
+        if (!window.speechSynthesis) {
+            console.warn('Speech synthesis not available');
+            return;
+        }
+        
+        // Cancel any ongoing speech
+        window.speechSynthesis.cancel();
+        
+        const utterance = new SpeechSynthesisUtterance(message);
+        utterance.rate = 0.9;
+        utterance.pitch = 1.1;
+        window.speechSynthesis.speak(utterance);
+    } catch (error) {
+        console.error('Error with speech synthesis:', error);
+    }
 }
 
 function createFloatingHearts() {
@@ -296,11 +331,29 @@ function createFloatingHearts() {
     setInterval(createHeart, 500);
 }
 
-// Initialize the card when the page loads
-document.addEventListener('DOMContentLoaded', () => {
+// Move initialization code into a main function
+function initializeApp() {
+    // Check for name in URL and show appropriate card
     const name = getNameFromUrl();
     showCard(name);
-});
+
+    // Add event listener for custom card creation
+    const customNameInput = document.getElementById('custom-name');
+    if (customNameInput) {
+        customNameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                createCustomCard();
+            }
+        });
+    }
+}
+
+// More robust initialization
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeApp);
+} else {
+    initializeApp();
+}
 
 function createCustomCard() {
     const nameInput = document.getElementById('custom-name');
