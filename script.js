@@ -296,15 +296,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function createCustomCard() {
     const nameInput = document.getElementById('custom-name');
-    const name = nameInput.value.trim();
+    const name = nameInput.value.trim().toLowerCase();
     
     if (name) {
+        // Check if the name is in our special list
+        const specialNames = ['natalia', 'kalia', 'sam', 'mom', 'kayla', 'tori', 
+                            'kyledan', 'erica', 'viktor', 'diran', 'hani'];
+        
         // Update URL without refreshing
         const url = new URL(window.location);
-        url.searchParams.set('name', 'custom-' + encodeURIComponent(name));
+        if (specialNames.includes(name)) {
+            url.searchParams.set('name', name);
+        } else {
+            url.searchParams.set('name', 'custom-' + encodeURIComponent(name));
+        }
         window.history.pushState({}, '', url);
         
-        showCard('custom-' + name);
+        showCard(specialNames.includes(name) ? name : 'custom-' + name);
     }
 }
 
