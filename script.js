@@ -11,9 +11,9 @@ function showCard(name) {
 
     // Show appropriate card based on name
     const messages = {
-        natalia: "To my beautiful Nati, who makes my world more fiery and adventurous than any volcano! Happy Valentine's Day! ❤️ - Love, Codi",
-        kalia: "To my precious little cow lover! Daddy loves you to the moooon and back! ❤️",
-        sam: `To my SamstaTehMonsta, Minecraft champion! You're better than netherite 𐂫! Happy Valentine's Day! ❤️ - Love, Dad`
+        natalia: "To my beautiful Nati, who makes my world more fiery and adventurous than any volcano! \n\nHappy Valentine's Day! ❤️ \n\n- Love, Codi",
+        kalia: "To my precious little cow lover! Daddy loves you to the moooon and back! ❤️\n\n- Love, Dad",
+        sam: `To my SamstaTehMonsta, Minecraft champion! You're better than netherite 𐂫! \n\n Happy Valentine's Day! \n\n ❤️ Love, Dad`
     };
 
     const cardId = `${name}-card`;

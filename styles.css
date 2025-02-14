@@ -251,6 +251,8 @@ body {
     border-radius: 10px;
     background: linear-gradient(45deg, rgba(255,20,147,0.1), rgba(255,105,180,0.1));
     transition: transform 0.3s ease;
+    white-space: pre-line;
+    text-align: left;
 }
 
 .message:hover {
