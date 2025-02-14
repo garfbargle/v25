@@ -530,4 +530,93 @@ body {
 @keyframes flagWave {
     0%, 100% { transform: rotate(-5deg); }
     50% { transform: rotate(5deg); }
+}
+
+/* Erica's Artist/Gamer Theme */
+.artistic-scene {
+    height: 300px;
+    background: linear-gradient(to bottom, #2a0a2a 0%, #4a1063 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.jellyfish-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.jellyfish {
+    position: absolute;
+    font-size: 40px;
+    animation: jellyfishFloat 8s ease-in-out infinite;
+    filter: hue-rotate(240deg);
+}
+
+.paint-splashes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.paint-splash {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: purple;
+    filter: blur(2px);
+    opacity: 0.6;
+    animation: fadeInOut 3s ease-in-out infinite;
+}
+
+.diablo-elements {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+    gap: 0;
+}
+
+.health-orb, .mana-orb {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    animation: orbPulse 2s ease-in-out infinite;
+}
+
+.health-orb {
+    background: radial-gradient(circle at 40% 40%, #ff6b6b, #590000);
+    box-shadow: 0 0 10px #ff0000;
+}
+
+.mana-orb {
+    background: radial-gradient(circle at 40% 40%, #6b88ff, #000059);
+    box-shadow: 0 0 10px #0000ff;
+}
+
+@keyframes orbPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes jellyfishFloat {
+    0%, 100% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+    }
+    25% {
+        transform: translateY(-20px) translateX(20px) rotate(5deg);
+    }
+    75% {
+        transform: translateY(20px) translateX(-20px) rotate(-5deg);
+    }
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 0.6; }
 } 

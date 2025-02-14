@@ -56,7 +56,8 @@ function showCard(name) {
         mom: "To the strongest woman I know!\n\nYour care and dedication to our family and others is truly inspiring. Thank you for always being there.\n\nHappy Valentine's Day! ❤️\n\nLove, Your Son",
         kayla: "To my tough-as-nails sister!\n\nProud of you for breaking barriers and showing them how it's done in a man's world. Keep being amazing!\n\nHappy Valentine's Day! ⚡❤️\n\nLove, Your Brother",
         tori: "To my animal-whispering sister!\n\nYour love for all creatures great and small makes the world a better place. Give all your furry (and scaly) friends a Valentine's hug from me!\n\nHappy Valentine's Day! 🐾❤️\n\nLove, Your Brother",
-        kyledan: "To Kyle & Dan, the ultimate freedom fighters! 🦅\n\nKeep stacking sats and protecting liberty. Your dedication to financial freedom and American values is truly inspiring.\n\nHappy Valentine's Day! ₿❤️🇺🇸\n\nFrom your fellow sovereign individual,\nCodi"
+        kyledan: "To Kyle & Dan, the ultimate freedom fighters! 🦅\n\nKeep stacking sats and protecting liberty. Your dedication to financial freedom and American values is truly inspiring.\n\nHappy Valentine's Day! ₿❤️🇺🇸\n\nFrom your fellow sovereign individual,\nCodi",
+        erica: "To my amazing friend Erica! 💜\n\nFrom that first day of college until now, you've colored my world with your creativity and friendship. Your artistic soul and gaming spirit make you truly unique - like a rare legendary drop! 🎮\n\nHappy Valentine's Day! 🐙\n\nLove, Codi"
     };
 
     const cardId = `${name}-card`;
@@ -88,6 +89,8 @@ function showCard(name) {
             animateAnimals();
         } else if (name === 'kyledan') {
             createStars();
+        } else if (name === 'erica') {
+            animateEricaScene();
         }
     } else {
         const defaultCard = document.getElementById('default-card');
@@ -304,4 +307,37 @@ style.textContent = `
         50% { opacity: 1; }
     }
 `;
-document.head.appendChild(style); 
+document.head.appendChild(style);
+
+// Add animation function for Erica's card
+function animateEricaScene() {
+    const container = document.querySelector('.jellyfish-container');
+    const paintContainer = document.querySelector('.paint-splashes');
+    
+    // Create jellyfish
+    function createJellyfish() {
+        const jellyfish = document.createElement('div');
+        jellyfish.innerHTML = '🪼';
+        jellyfish.className = 'jellyfish';
+        jellyfish.style.left = Math.random() * 80 + 10 + '%';
+        jellyfish.style.top = Math.random() * 80 + 10 + '%';
+        container.appendChild(jellyfish);
+        setTimeout(() => jellyfish.remove(), 8000);
+    }
+
+    // Create paint splashes
+    function createPaintSplash() {
+        const splash = document.createElement('div');
+        splash.className = 'paint-splash';
+        splash.style.left = Math.random() * 100 + '%';
+        splash.style.top = Math.random() * 100 + '%';
+        splash.style.transform = `scale(${Math.random() * 2 + 1})`;
+        splash.style.background = `hsl(${280 + Math.random() * 40}, 70%, 50%)`;
+        paintContainer.appendChild(splash);
+        setTimeout(() => splash.remove(), 3000);
+    }
+
+    // Start animations
+    setInterval(createJellyfish, 2000);
+    setInterval(createPaintSplash, 1000);
+} 
