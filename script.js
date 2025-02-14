@@ -96,6 +96,7 @@ function showCard(name) {
             natalia: "To my beautiful Natalia, who makes my world more warm and adventurous than any volcano! Thank you for being such an amazing Mom to our family! \n\n To many more travels & adventures around this planet together. <3 \n\nHappy Valentine's Day! ❤️ \n\n- Te amo mucho, Codi",
             kalia: "To my precious little cow lover! \n\n Daddy loves you to the moooon and back! \n\nLove, Dad",
             sam: `To my SamstaTehMonsta, Minecraft champion! You're better than netherite 𐂫! \n\n Happy Valentine's Day! \n\n ❤️ Love, Dad`,
+            dad: "To my amazing dad, ⌘BigSarge628! 🎖️\n\nImagine if you hadn't been obsessed with computers too.... Your guidance and wisdom have shaped who I am today. Our endless conversations about everything under the sun are some of my most cherished memories. Can't wait for you to visit us - we have so much more to talk about!\n\nHappy Valentine's Day! ❤️\n\nProudly,\nYour Son",
             mom: "To the bravest Grandma in the world! 🦸‍♀️\n\nI know you're a bit scared of those sneaky snakes in Costa Rica, but guess what? They're more afraid of you than you are of them! 🐍💚 We all can't wait for you to come visit and experience the beauty of this amazing place! It's a paradise filled with sunshine, adventure, and love! 🌴✨ Maybe we can even find a fun way to help you face those fears—how about a little hypnosis magic? 🎩💖\n\nHappy Valentine's Day! ❤️\n\nLove, Your Son",
             kayla: "To my tough-as-nails sister!\n\nProud of you for breaking barriers and showing them how it's done in a man's world. Keep being amazing!\n\nHappy Valentine's Day! ⚡❤️\n\nLove, Your Brother",
             tori: "To my animal-whispering sister!\n\nYour love for all creatures great and small makes the world a better place. Give all your furry (and scaly) friends a Valentine's hug from me!\n\nHappy Valentine's Day! 🐾❤️\n\nLove, Your Brother",
@@ -153,6 +154,8 @@ function showCard(name) {
                 animateHaniScene();
             } else if (name === 'natalia') {
                 animateCostaRicaScene();
+            } else if (name === 'dad') {
+                animateMilitaryScene();
             }
         } else {
             const defaultCard = document.getElementById('default-card');
@@ -787,4 +790,85 @@ costaRicaStyle.textContent = `
         }
     }
 `;
-document.head.appendChild(costaRicaStyle); 
+document.head.appendChild(costaRicaStyle);
+
+// Add animation function for Dad's military theme
+function animateMilitaryScene() {
+    const container = document.querySelector('.military-scene');
+    if (!container) return;
+
+    // Create medals and stars
+    function createMedal() {
+        const medals = ['🎖️', '⭐', '🏅'];
+        const medal = document.createElement('div');
+        medal.className = 'military-medal';
+        medal.textContent = medals[Math.floor(Math.random() * medals.length)];
+        medal.style.left = Math.random() * 100 + '%';
+        medal.style.top = Math.random() * 100 + '%';
+        container.appendChild(medal);
+        setTimeout(() => medal.remove(), 3000);
+    }
+
+    // Create computer code particles
+    function createCodeParticle() {
+        const codes = ['if', 'while', 'for', '{}', '[]', '⌘'];
+        const particle = document.createElement('div');
+        particle.className = 'code-particle';
+        particle.textContent = codes[Math.floor(Math.random() * codes.length)];
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.color = '#00ff00'; // Military green color
+        container.appendChild(particle);
+        setTimeout(() => particle.remove(), 2000);
+    }
+
+    // Create American flag wave effect
+    const flag = document.createElement('div');
+    flag.className = 'military-flag';
+    flag.textContent = '🇺🇸';
+    container.appendChild(flag);
+
+    // Start animations
+    setInterval(createMedal, 1000);
+    setInterval(createCodeParticle, 500);
+}
+
+// Add military scene styles
+const militaryStyle = document.createElement('style');
+militaryStyle.textContent = `
+    .military-scene {
+        height: 300px;
+        background: linear-gradient(to bottom, #1a472a, #2d5a3f);
+        position: relative;
+        overflow: hidden;
+        padding: 20px;
+    }
+
+    .military-medal {
+        position: absolute;
+        font-size: 30px;
+        animation: medalFloat 3s ease-out forwards;
+    }
+
+    .military-flag {
+        position: absolute;
+        font-size: 60px;
+        right: 20px;
+        top: 20px;
+        animation: flagWave 3s infinite;
+    }
+
+    @keyframes medalFloat {
+        0% {
+            transform: scale(0) rotate(0deg);
+            opacity: 0;
+        }
+        20% {
+            opacity: 1;
+        }
+        100% {
+            transform: scale(1.5) rotate(360deg);
+            opacity: 0;
+        }
+    }
+`;
+document.head.appendChild(militaryStyle); 
