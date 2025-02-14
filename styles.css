@@ -811,4 +811,100 @@ body {
 @keyframes mapPulse {
     0%, 100% { transform: translateX(-50%) scale(1); }
     50% { transform: translateX(-50%) scale(1.1); }
+}
+
+/* Hani's Portal/Tech Theme */
+.portal-scene {
+    height: 300px;
+    background: linear-gradient(to bottom, #000 0%, #1a1a1a 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 20px;
+}
+
+.portal-frame {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150px;
+    height: 150px;
+    border: 8px solid #00ff00;
+    border-radius: 50%;
+    animation: portalPulse 3s infinite;
+    box-shadow: 0 0 20px #00ff00;
+}
+
+.portal-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle at center, #0066ff, #000);
+    border-radius: 50%;
+    animation: displayShimmer 2s infinite;
+}
+
+.portal-particles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.saudi-flag {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 60px;
+    height: 40px;
+    background: #006c35;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sword {
+    width: 30px;
+    height: 4px;
+    background: white;
+    position: relative;
+}
+
+.sword::before {
+    content: '⚔️';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+}
+
+.gaming-elements {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+@keyframes portalPulse {
+    0%, 100% {
+        transform: translate(-50%, -50%) scale(1);
+        border-color: #00ff00;
+    }
+    50% {
+        transform: translate(-50%, -50%) scale(1.1);
+        border-color: #0066ff;
+    }
+}
+
+@keyframes displayShimmer {
+    0%, 100% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1.05);
+    }
 } 

@@ -59,7 +59,8 @@ function showCard(name) {
         kyledan: "To Kyle & Dan, the ultimate freedom fighters! 🦅\n\nKeep stacking sats and protecting liberty. Your dedication to financial freedom and American values is truly inspiring.\n\nHappy Valentine's Day! ₿❤️🇺🇸\n\nFrom your fellow sovereign individual,\nCodi",
         erica: "To my amazing friend Erica! 💜\n\nFrom that first day of college until now, you've colored my world with your creativity and friendship. Your artistic soul and gaming spirit make you truly unique - like a rare legendary drop! 🎮\n\nHappy Valentine's Day! 🐙\n\nLove, Codi",
         viktor: "To my 🇧🇬h4xor friend Viktor! \n\nFrom debugging code to debugging life over Starbucks iced coffees, you've shown me what true friendship means in just a few days. Your brilliant mind for math and systems never ceases to amaze me!\n\nHappy Valentine's Day! ☕️\n\nFrom your friend irl,\nCodi",
-        diran: "To my brilliant friend Diran! 🚀\n\nFrom late-night 'coding sessions' in the dorms to watching you conquer the world, you've always inspired me with your genius and generosity. Your journey from aerospace savant to crypto pioneer shows that the sky's not the limit - it's just the beginning!\n\nHappy Valentine's Day! 🇦🇲✨\n\nYour proud friend,\nCodi"
+        diran: "To my brilliant friend Diran! 🚀\n\nFrom late-night 'coding sessions' in the dorms to watching you conquer the world, you've always inspired me with your genius and generosity. Your journey from aerospace savant to crypto pioneer shows that the sky's not the limit - it's just the beginning!\n\nHappy Valentine's Day! 🇦🇲✨\n\nYour proud friend,\nCodi",
+        hani: "To my brilliant friend Hani! 🌀\n\nFrom building portals to new dimensions to crushing it in games, your ability to bring sci-fi dreams to reality never ceases to amaze me. You're the perfect blend of hardware hacker and software wizard - a true renaissance builder!\n\nHappy Valentine's Day! 🎮✨\n\nLet's game soon!\nCodi"
     };
 
     const cardId = `${name}-card`;
@@ -97,6 +98,8 @@ function showCard(name) {
             animateViktorScene();
         } else if (name === 'diran') {
             animateDiranScene();
+        } else if (name === 'hani') {
+            animateHaniScene();
         }
     } else {
         const defaultCard = document.getElementById('default-card');
@@ -408,4 +411,66 @@ function animateDiranScene() {
     // Start animations
     setInterval(createCodeParticle, 500);
     setInterval(createCryptoSymbol, 1000);
+}
+
+// Add Hani's animation function
+function animateHaniScene() {
+    const container = document.querySelector('.portal-particles');
+    const gamingContainer = document.querySelector('.gaming-elements');
+    const gameIcons = ['🎮', '🎲', '🎯', '💻', '🔧', '⚡'];
+    
+    // Create portal particles
+    function createPortalParticle() {
+        const particle = document.createElement('div');
+        particle.style.position = 'absolute';
+        particle.style.width = '4px';
+        particle.style.height = '4px';
+        particle.style.background = `hsl(${Math.random() * 60 + 120}, 100%, 50%)`;
+        particle.style.left = '50%';
+        particle.style.top = '50%';
+        particle.style.borderRadius = '50%';
+        
+        const angle = Math.random() * Math.PI * 2;
+        const velocity = 2;
+        const vx = Math.cos(angle) * velocity;
+        const vy = Math.sin(angle) * velocity;
+        
+        let x = 0;
+        let y = 0;
+        let scale = 1;
+        
+        function animate() {
+            x += vx;
+            y += vy;
+            scale *= 0.99;
+            
+            particle.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
+            
+            if (scale > 0.01) {
+                requestAnimationFrame(animate);
+            } else {
+                particle.remove();
+            }
+        }
+        
+        container.appendChild(particle);
+        animate();
+    }
+    
+    // Create gaming/tech elements
+    function createGameIcon() {
+        const icon = document.createElement('div');
+        icon.textContent = gameIcons[Math.floor(Math.random() * gameIcons.length)];
+        icon.style.position = 'absolute';
+        icon.style.fontSize = '24px';
+        icon.style.left = Math.random() * 100 + '%';
+        icon.style.top = Math.random() * 100 + '%';
+        icon.style.opacity = '0';
+        icon.style.animation = 'fadeInOut 2s ease-in-out forwards';
+        gamingContainer.appendChild(icon);
+        setTimeout(() => icon.remove(), 2000);
+    }
+    
+    setInterval(createPortalParticle, 50);
+    setInterval(createGameIcon, 1000);
 } 
